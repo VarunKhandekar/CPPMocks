@@ -116,6 +116,8 @@ int main() {
   while (find_safe_move(revealed, move)) {
     cout << move << " ";
     make_move(move, mines, revealed);
+    //display_board(revealed);
+    //break;
   }
   cout << endl;
 
