@@ -8,3 +8,4 @@ PigLatin
 Correct
 Playfair
 River
+Minesweeper
