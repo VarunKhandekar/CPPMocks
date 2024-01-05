@@ -1,4 +1,5 @@
 Completed:
+
 Substring
 Soundex
 Braille
