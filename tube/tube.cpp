@@ -130,3 +130,210 @@ Direction string_to_direction(const char *token) {
   }
   return INVALID_DIRECTION;
 }
+
+
+
+bool get_symbol_position(char** map, int height, int width, char target, int& r, int& c){
+  r = -1;
+  c = -1;
+  for (int row = 0; row < height; row++){
+    for (int col = 0; col < width; col++){
+      if (map[row][col] == target){
+        r = row;
+        c = col;
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+
+char get_code_helper(const char* name, const char* filename){
+  ifstream in(filename);
+  char code;
+  char line_or_station[512] = {};
+  while (!in.eof()){
+    in >> code;
+    int i = 0;
+    char ch;
+    // we are pointing at a space. Skip over that i.e. get a ch twice
+    in.get(ch);
+    in.get(ch);
+    while (ch != '\n'){
+      line_or_station[i] = ch;
+      i++;
+      in.get(ch);
+    }
+    line_or_station[i] = '\0';
+    if (strcmp(name, line_or_station) == 0){
+      in.close();
+      return code;
+    }  
+  }
+  in.close();
+  return ' ';
+}
+
+
+char get_symbol_for_station_or_line(const char* name){
+  ifstream in("stations.txt");
+  char code = ' ';
+  code = get_code_helper(name, "stations.txt");
+  if (code != ' '){
+    return code;
+  }
+  else {
+    code = get_code_helper(name, "lines.txt");
+  }
+  return code;
+}
+
+
+void direction_to_deltas(Direction d, int& r_delta, int& c_delta){
+  switch(d){
+    case N: r_delta = -1;
+            c_delta = 0;
+            return;
+    case S: r_delta = 1;
+            c_delta = 0;
+            return;
+    case W: r_delta = 0;
+            c_delta = -1;
+            return;
+    case E: r_delta = 0;
+            c_delta = 1;
+            return;
+    case NE: r_delta = -1;
+             c_delta = 1;
+             return;
+    case NW: r_delta = -1;
+             c_delta = -1;
+             return;
+    case SE: r_delta = 1;
+             c_delta = 1;
+             return;
+    case SW: r_delta = 1;
+             c_delta = -1;
+             return;
+    default: r_delta = 0;
+             c_delta = 0;
+             return;
+  }
+}
+
+Direction get_reverse_dir(Direction d){
+  switch(d){
+    case N: return S;
+    case S: return N;
+    case W: return E;
+    case E: return W;
+    case NE: return SW;
+    case NW: return SE;
+    case SE: return NW;
+    case SW: return NE;
+    default: return INVALID_DIRECTION;
+  }
+}
+
+bool is_station(char** map, int row, int col){
+  char ch = map[row][col];
+  if (isalnum(ch) == 0){
+    return false;
+  }
+  return true;
+}
+
+
+void get_station_name(char ch, char* destination) {
+  ifstream in("stations.txt");
+  char code;
+  char station[512] = {};
+  while (!in.eof()){
+    in >> code;
+    int i = 0;
+    char c;
+    // we are pointing at a space. Skip over that i.e. get a ch twice
+    in.get(c);
+    in.get(c);
+    while (c != '\n'){
+      station[i] = c;
+      i++;
+      in.get(c);
+    }
+    station[i] = '\0';
+    if (ch == code){
+      strcpy(destination, station);
+      return;
+    }  
+  }
+  in.close();
+}
+
+
+int validate_route(char** map, int height, int width, const char* start_station, char* route, char* destination){
+  // validate start station
+  char start_symbol = get_symbol_for_station_or_line(start_station);
+  if (start_symbol == ' '){
+    return ERROR_START_STATION_INVALID;
+  }
+  // validate directions
+  char route_copy[512];
+  strcpy(route_copy, route);
+  char* token;
+  token = strtok(route_copy, ",");
+  int prev_dir = -1;
+  while (token != nullptr){
+    if (strlen(token) > 2){
+      return ERROR_INVALID_DIRECTION;
+    }
+    // check letters
+    Direction dir = string_to_direction(token);
+    if (dir == ERROR_INVALID_DIRECTION){
+      return ERROR_INVALID_DIRECTION;
+    }
+    if (get_reverse_dir(dir) == prev_dir){
+      return ERROR_BACKTRACKING_BETWEEN_STATIONS;
+    }
+    prev_dir = dir;
+    token = strtok(nullptr, ",");
+  }
+
+  // follow journey
+  int r, c;
+  get_symbol_position(map, height, width, start_symbol, r, c);
+  token = strtok(route, ",");
+  while (token != nullptr){
+    // get current char
+    char old_ch = map[r][c];
+    // get our new map position
+    Direction dir = string_to_direction(token);
+    int r_delta, c_delta;
+    direction_to_deltas(dir, r_delta, c_delta);
+    r += r_delta;
+    c += c_delta;
+    // check bounds
+    if (r < 0 || r > (height-1) || c < 0 || c > (width -1)){
+      return ERROR_OUT_OF_BOUNDS;
+    }
+
+    // check for line hopping
+    if (isalnum(map[r][c])==0 && isalnum(old_ch) == 0 && map[r][c]!=old_ch){
+      return ERROR_LINE_HOPPING_BETWEEN_STATIONS;
+    }
+
+
+    token = strtok(nullptr, ",");
+  }
+
+  
+  // we are at the end of the route. Check that where we are is a station
+  if (!is_station(map, r, c)){
+    cout << map[r][c] << endl;
+    return ERROR_ROUTE_ENDPOINT_IS_NOT_STATION;
+  }
+
+  // route was all ok. Get station name
+  get_station_name(map[r][c], destination);
+  return 0;
+}

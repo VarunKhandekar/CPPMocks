@@ -1,3 +1,6 @@
+#ifndef TUBE_H
+#define TUBE_H
+
 enum Direction {N, S, W, E, NE, NW, SE, SW, INVALID_DIRECTION};
 
 /* error codes for Question 3 */
@@ -21,3 +24,10 @@ const char *error_description(int code);
 /* presupplied helper function for converting string to Direction enum */
 Direction string_to_direction(const char *token);
 
+bool get_symbol_position(char**, int, int, char, int&, int&);
+
+char get_symbol_for_station_or_line(const char*);
+
+int validate_route(char**, int, int, const char*, char*, char*);
+
+#endif

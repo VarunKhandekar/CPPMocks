@@ -70,6 +70,15 @@ int main() {
 
   /* valid route to Leicester Square with 1 line change */
   strcpy(route, "S,SE,S,S,E,E,E,E,E,E,E,E,E,E,E");
+
+  //char* token;
+  //token = strtok(route, ",");
+  //while (token != nullptr){
+  //  cout << token << endl;
+  //  token = strtok(nullptr, ","); 
+  //}
+
+
   cout << "Starting at Oxford Circus and taking the steps:" << endl;
   cout << route << endl;
   int result = validate_route(map, height, width, "Oxford Circus", route, destination);
