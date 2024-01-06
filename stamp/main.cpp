@@ -136,5 +136,14 @@ int main()
     "message1.txt");
   cout << message_status(result) << endl << endl;
 
+  // wrong header format
+  cout << "Checking email with header " << endl
+       << "'wjk@imp:erial.ac.uk:60eb8db1a3c0ea1ad3d5548f248b4a3e73711ee5:875231'"
+       << endl << "sent to 'wjk@imperial.ac.uk' with body 'message1.txt':" << endl;
+  result = check_header("wjk@imperial.ac.uk",
+    "wjk@imp:erial.ac.uk:60eb8db1a3c0ea1ad3d5548f248b4a3e73711ee5:875231",
+    "message1.txt");
+  cout << message_status(result) << endl << endl;
+
   return 0;
 }
