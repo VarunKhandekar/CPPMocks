@@ -87,7 +87,6 @@ int main() {
   cout << "====================== Question 3 ======================" << endl << endl;
 
   /* uncomment for simple test case */
-  /*
   int h,w;
   char **first = load_board("target5.txt", h, w);
   assert(first);
@@ -102,7 +101,7 @@ int main() {
   cout << endl;
   deallocate_2D_array(first, h);
   deallocate_2D_array(second, w);
-  */
+
   
   const char *filenames[] = { "board.txt", "target1.txt", "target2.txt", "target3.txt",
     "target4.txt", "target5.txt", "solution.txt", NULL };
@@ -129,7 +128,7 @@ int main() {
     deallocate_2D_array(target, height);
   }
   deallocate_2D_array(start, height);
-
+  
   cout << "======================= The End ========================" << endl << endl;
   
   return 0;
