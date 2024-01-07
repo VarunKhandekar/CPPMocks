@@ -1,3 +1,6 @@
+#ifndef GOGEN_H
+#define GOGEN_H
+
 /*  Pre-supplied functions for loading and printing board and word list */
 
 char **load_board(const char *filename);
@@ -14,3 +17,15 @@ void delete_words(char **words);
 
 /* add your function prototypes here */
 
+
+bool get_position(char**, char, int&, int&);
+
+bool valid_solution(char**, char**);
+
+void update(char**, char, Mask&);
+
+void neighbourhood_intersect(Mask&, Mask&);
+
+bool solve_board(char**, char**);
+
+#endif
