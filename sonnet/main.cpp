@@ -42,6 +42,9 @@ int main() {
   cout << "The line \"Shall I compare thee to a Summer's day?\" contains ";
   cout << count_words("Shall I compare thee to a Summer's day?") << " words" << endl;
 
+  cout << "What fountain-haunting nymph, what dryad, sought\" contains ";
+  cout << count_words("What fountain-haunting nymph, what dryad, sought") << " words" << endl;
+
   cout << endl;
 
   // Question 2

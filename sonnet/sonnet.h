@@ -1,3 +1,6 @@
+#ifndef SONNET_H
+#define SONNET_H
+
 // RESET is a constant used by function rhyming_letter(...)
 #define RESET NULL
 
@@ -18,3 +21,13 @@ bool get_word(const char *input_line, int number, char *output_word);
    poem) by calling rhyming_letter(RESET). */
 
 char rhyming_letter(const char *ending);
+
+int count_words(const char*);
+
+bool find_phonetic_ending(const char*, char*);
+
+bool find_rhyme_scheme(const char*, char*);
+
+std::string identify_sonnet(const char*);
+
+#endif
