@@ -127,8 +127,8 @@ bool find_phonetic_ending(const char* word, char* phonetic_ending){
     return false;
   }
   
+  in.getline(line, 512);
   while (in){
-    in.getline(line, 512);
     token = strtok(line, " ");
     if (strcmp(word, token) == 0){
       while (token != nullptr){
@@ -141,6 +141,7 @@ bool find_phonetic_ending(const char* word, char* phonetic_ending){
       in.close();
       return true;
     }
+    in.getline(line, 512);
   }
 
   in.close();
