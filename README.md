@@ -12,3 +12,4 @@ Minesweeper
 Tube
 Stamp
 Gogen
+Sonnet
