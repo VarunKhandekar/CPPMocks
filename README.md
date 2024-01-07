@@ -9,3 +9,6 @@ Correct
 Playfair
 River
 Minesweeper
+Tube
+Stamp
+Gogen
