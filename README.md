@@ -13,3 +13,5 @@ Tube
 Stamp
 Gogen
 Sonnet
+Solitaire
+Laser
