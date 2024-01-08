@@ -65,17 +65,22 @@ int main() {
 
   cout << "====================== Question 3 ======================" << endl << endl;
 
+  //int rd,cd;
+  //direction_to_delta(EAST, rd, cd);
+  //cout << rd << " : " << cd << endl;
+
   /* uncomment this if you prefer to start with a simple test case */
   /*
+     char message[512];
      board = load_board("biscuit.txt", height, width);
      assert(board);
      int last_row, last_col;
      success = shoot(board, height, width, message, last_row, last_col);
-     print_board(board);
+     print_board(board, height, width);
      assert(success == true);
      assert(last_row == 9 && last_col == 31);
    */
-
+  
   struct TestCase {
     char filename[512];
     char message[512];
@@ -112,7 +117,7 @@ int main() {
     
     deallocate_2D_array(board, height);
   }
-
+  
   cout << "====================== Question 4 ======================" << endl << endl;
 
   char message[512];
@@ -135,7 +140,7 @@ int main() {
   print_board(board, height, width);    
   deallocate_2D_array(board, height);
   cout << endl;
-
+  
   cout << "Loading board from 'happynewyear-plan.txt'... ";  
   board = load_board("happynewyear-plan.txt", height, width);
   assert(board);
@@ -153,7 +158,7 @@ int main() {
   print_board(board, height, width);    
   deallocate_2D_array(board, height);
   cout << endl;
-
+  
   cout << "========================= FIN ==========================" << endl << endl;
   
   return 0;
