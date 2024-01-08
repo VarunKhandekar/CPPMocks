@@ -15,3 +15,4 @@ Gogen
 Sonnet
 Solitaire
 Laser
+Doublets
